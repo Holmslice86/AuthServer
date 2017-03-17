@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  authserver.host:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"

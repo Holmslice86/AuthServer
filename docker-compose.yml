@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  authserver.host:
+    image: authserver.host
+    build:
+      context: ./AuthServer.Host
+      dockerfile: Dockerfile
