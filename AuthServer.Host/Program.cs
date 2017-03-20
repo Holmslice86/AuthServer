@@ -17,6 +17,7 @@ namespace AuthServer.Host
                 .UseUrls("http://localhost:5000")
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
+                .UseIISIntegration()
                 .UseApplicationInsights()
                 .Build();
 

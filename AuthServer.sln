@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthServer.Host", "AuthServer.Host\AuthServer.Host.csproj", "{6CC37680-45D5-4455-B4D4-598922F949C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthServer.Host", "AuthServer.Host\AuthServer.Host.csproj", "{6CC37680-45D5-4455-B4D4-598922F949C3}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{97F11EFD-67C3-4CF1-A6A9-09D46115B1F7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthServer.Configuration", "AuthServer.Configuration\AuthServer.Configuration.csproj", "{8A1E71FB-CAC2-4139-A111-89986B747776}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthServer.Tests", "AuthServer.Tests\AuthServer.Tests.csproj", "{0810AD92-47F6-4647-8713-FBE274F891B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthServer.Tests", "AuthServer.Tests\AuthServer.Tests.csproj", "{0810AD92-47F6-4647-8713-FBE274F891B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +23,6 @@ Global
 		{97F11EFD-67C3-4CF1-A6A9-09D46115B1F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97F11EFD-67C3-4CF1-A6A9-09D46115B1F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97F11EFD-67C3-4CF1-A6A9-09D46115B1F7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A1E71FB-CAC2-4139-A111-89986B747776}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A1E71FB-CAC2-4139-A111-89986B747776}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A1E71FB-CAC2-4139-A111-89986B747776}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A1E71FB-CAC2-4139-A111-89986B747776}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0810AD92-47F6-4647-8713-FBE274F891B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0810AD92-47F6-4647-8713-FBE274F891B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0810AD92-47F6-4647-8713-FBE274F891B4}.Release|Any CPU.ActiveCfg = Release|Any CPU

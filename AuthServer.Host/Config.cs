@@ -3,7 +3,7 @@ using IdentityServer4.Test;
 using System;
 using System.Collections.Generic;
 
-namespace AuthServer.Configuration
+namespace AuthServer.Host
 {
     public class Config
     {

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using AuthServer.Configuration;
 
 namespace AuthServer.Host
 {
@@ -30,6 +29,8 @@ namespace AuthServer.Host
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients())
                 .AddTestUsers(Config.GetUsers());
+
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +40,7 @@ namespace AuthServer.Host
             loggerFactory.AddDebug();
 
             app.UseIdentityServer();
+            app.UseMvc();
         }
     }
 }
