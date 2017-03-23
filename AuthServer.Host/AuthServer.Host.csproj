@@ -14,5 +14,9 @@
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AuthServer.Repositories\AuthServer.Repositories.csproj" />
+    <ProjectReference Include="..\AuthServer.Services\AuthServer.Services.csproj" />
+  </ItemGroup>
 
 </Project>
