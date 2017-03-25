@@ -1,31 +1,29 @@
 using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using AuthServer.Host;
-using Microsoft.AspNetCore.TestHost;
 using System.Net.Http;
 using System.Threading.Tasks;
 using IdentityModel.Client;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using AuthServer.Tests.Models;
+using Xunit;
+using Microsoft.AspNetCore.TestHost;
 
 namespace AuthServer.Tests
 {
-    [TestClass]
     public class AuthenticationTests
     {
         private TestServer _server;
 
-        [TestInitialize]
-        public void Init()
+        public AuthenticationTests()
         {
             var webHostBuilder = CreateWebHostBuilder();
             _server = new TestServer(webHostBuilder);
         }
 
-        //[TestMethod]
+        //[Fact]
         public async Task ClientExampleDoesntWorkInTest()
         {
             using (var client = _server.CreateClient())
@@ -33,17 +31,17 @@ namespace AuthServer.Tests
                 var disco = await DiscoveryClient.GetAsync(client.BaseAddress.ToString());
                 var tokenClient = new TokenClient(disco.TokenEndpoint, "client", "secret");
                 var tokenResponse = await tokenClient.RequestClientCredentialsAsync("api1");
-                Assert.AreEqual(false, tokenResponse.IsError);
+                Assert.Equal(false, tokenResponse.IsError);
 
                 var disco2 = await DiscoveryClient.GetAsync(client.BaseAddress.ToString());
                 var tokenClient2 = new TokenClient(disco.TokenEndpoint, "client", "secret");
                 var tokenResponse2 = await tokenClient.RequestResourceOwnerPasswordAsync("alice", "password", "api1");
-                Assert.AreEqual(false, tokenResponse2.IsError);
+                Assert.Equal(false, tokenResponse2.IsError);
             }
         }
 
 
-        [TestMethod]
+        [Fact]
         public async Task GetClientTestToken_ReturnsToken()
         {
            
@@ -61,12 +59,12 @@ namespace AuthServer.Tests
 
                 var content = await responseMessage.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<Token>(content);
-                Assert.IsTrue(responseMessage.IsSuccessStatusCode);
-                Assert.IsTrue(!string.IsNullOrWhiteSpace(result.access_token));
+                Assert.True(responseMessage.IsSuccessStatusCode);
+                Assert.True(!string.IsNullOrWhiteSpace(result.access_token));
             }
         }
 
-        [TestMethod]
+        [Fact]
         public async Task GetUserTestToken_ReturnsToken()
         {
             using (var client = _server.CreateClient())
@@ -86,13 +84,13 @@ namespace AuthServer.Tests
                 var content = await responseMessage.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<Token>(content);
 
-                Assert.IsTrue(responseMessage.IsSuccessStatusCode);
-                Assert.IsTrue(!string.IsNullOrWhiteSpace(result.access_token));
+                Assert.True(responseMessage.IsSuccessStatusCode);
+                Assert.True(!string.IsNullOrWhiteSpace(result.access_token));
             }
         }
 
 
-        [TestMethod]
+        [Fact]
         public async Task GetUsers_ReturnsUsers()
         {
             using (var client = _server.CreateClient())
@@ -103,7 +101,7 @@ namespace AuthServer.Tests
 
                 var content = await responseMessage.Content.ReadAsStringAsync();
 
-                Assert.IsFalse(string.IsNullOrWhiteSpace(content));
+                Assert.False(string.IsNullOrWhiteSpace(content));
             }
         }
 
