@@ -13,7 +13,25 @@ namespace AuthServer.Services.Users
             _userRepository = userRepository;
         }
 
+        public User GetUser(string subjectId)
+        {
+            throw new NotImplementedException();
+        }
 
+        public IEnumerable<User> GetUsers()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateUser(string email)
+        {
+            var user = new User(email);
+        }
+
+        public void DeleteUser()
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }

@@ -25,6 +25,10 @@ namespace AuthServer.Host
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUserService, UserService>();
+
+
             // configure identity server with in-memory stores, keys, clients and scopes
             services.AddIdentityServer()
                 .AddTemporarySigningCredential()
@@ -33,9 +37,6 @@ namespace AuthServer.Host
                 .AddTestUsers(Config.GetUsers());
 
             services.AddMvc();
-
-            services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

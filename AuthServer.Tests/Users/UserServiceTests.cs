@@ -1,4 +1,5 @@
-﻿using AuthServer.Services.Users;
+﻿using AuthServer.Repositories.Users;
+using AuthServer.Services.Users;
 using System;
 using Xunit;
 
@@ -6,37 +7,32 @@ namespace AuthServer.Tests.Users
 {
     public class UserServiceTests
     {
-        [Theory]
-        [InlineData("")]
-        [InlineData(" ")]
-        [InlineData(null)]
-        public void CreateUser_ValidatesFirstName(string firstName)
-        {
-            Assert.Throws<ArgumentException>(() => CreateUser(firstName, "Johnson", "jim@gmail.com"));
-        }
 
         [Theory]
         [InlineData("")]
         [InlineData(" ")]
         [InlineData(null)]
-        public void CreateUser_ValidatesLastName(string lastName)
-        {
-            Assert.Throws<ArgumentException>(() => CreateUser("Jim", lastName, "jim@gmail.com"));
-        }
-
-        [Theory]
-        [InlineData("")]
-        [InlineData(" ")]
-        [InlineData(null)]
+        [InlineData("yourmom")]
+        [InlineData("your@mom@.web")]
+        [InlineData("@#!@$(@(#)$(#)&&*()!@gmail.com")]
         public void CreateUser_ValidatesEmail(string email)
         {
-            Assert.Throws<ArgumentException>(() => CreateUser("Jim", "Johnson", email));
+            var service = CreateService();
+           
+            Assert.Throws<ArgumentException>(() => service.CreateUser(email));
+        }
+
+        [Theory]
+        [InlineData("jim", "johnson", "jim.johnson@gmail.com")]
+        public void CreateUser_Succeeds(string first, string last, string email)
+        {
+            var service = CreateService();
         }
 
 
-        private User CreateUser(string first, string last, string email)
+        private IUserService CreateService()
         {
-            return new User(first, last, email);
+            return new UserService(new UserRepository());
         }
 
     }
