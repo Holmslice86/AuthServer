@@ -10,7 +10,7 @@ script:
   - dotnet restore ./AuthServer.sln 
   - dotnet test ./AuthServer.Tests/AuthServer.Tests.csproj
   - dotnet publish ./AuthServer.sln -c Release -o ./obj/Docker/publish
-  - docker build ./AuthServer.Host/ -t $DOCKER_USERNAME/authserver;
+  - docker build ./AuthServer.Host/ -t $DOCKER_USERNAME/authserver:latest;
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
