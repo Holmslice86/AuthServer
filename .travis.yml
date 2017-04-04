@@ -1,9 +1,19 @@
-language: csharp
-dist: trusty
 sudo: required
+dist: trusty
+language: csharp
 mono: none
 dotnet: 1.0.1
+services:
+  - docker
+
 script:
   - dotnet restore ./AuthServer.sln 
   - dotnet test ./AuthServer.Tests/AuthServer.Tests.csproj
   - dotnet publish ./AuthServer.sln
+  - docker build -t $DOCKER_USERNAME/authserver;
+
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    docker push $DOCKER_USERNAME/authserver;
+    fi
