@@ -1,23 +1,22 @@
-using System;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using AuthServer.Host;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using IdentityModel.Client;
-using System.Collections.Generic;
-using Newtonsoft.Json;
+using AuthServer.Host;
 using AuthServer.Tests.Models;
-using Xunit;
+using IdentityModel.Client;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Xunit;
 
-namespace AuthServer.Tests
+namespace AuthServer.Tests.Integration
 {
-    public class AuthenticationTests
+    public class AuthTests
     {
         private TestServer _server;
 
-        public AuthenticationTests()
+        public AuthTests()
         {
             var webHostBuilder = CreateWebHostBuilder();
             _server = new TestServer(webHostBuilder);
@@ -39,7 +38,6 @@ namespace AuthServer.Tests
                 Assert.Equal(false, tokenResponse2.IsError);
             }
         }
-
 
         [Fact]
         public async Task GetClientTestToken_ReturnsToken()
@@ -86,22 +84,6 @@ namespace AuthServer.Tests
 
                 Assert.True(responseMessage.IsSuccessStatusCode);
                 Assert.True(!string.IsNullOrWhiteSpace(result.access_token));
-            }
-        }
-
-
-        [Fact]
-        public async Task GetUsers_ReturnsUsers()
-        {
-            using (var client = _server.CreateClient())
-            {
-                var requestMessage = new HttpRequestMessage(new HttpMethod("GET"), "/api/User");
-
-                var responseMessage = await client.SendAsync(requestMessage);
-
-                var content = await responseMessage.Content.ReadAsStringAsync();
-
-                Assert.False(string.IsNullOrWhiteSpace(content));
             }
         }
 

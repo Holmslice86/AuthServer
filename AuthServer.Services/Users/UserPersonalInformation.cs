@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace AuthServer.Services.Users
+namespace AuthServer.Users.Users
 {
     public class UserPersonalInformation
     {

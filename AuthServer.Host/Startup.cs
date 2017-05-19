@@ -1,5 +1,5 @@
-﻿using AuthServer.Repositories.Users;
-using AuthServer.Services.Users;
+﻿using AuthServer.Users.Repository;
+using AuthServer.Users.Users;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +26,7 @@ namespace AuthServer.Host
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserCollection, UserCollection>();
 
 
             // configure identity server with in-memory stores, keys, clients and scopes

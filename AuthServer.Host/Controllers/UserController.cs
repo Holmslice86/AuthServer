@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AuthServer.Users.Users;
 using Microsoft.AspNetCore.Mvc;
-using AuthServer.Services.Users;
 
 namespace AuthServer.Host.Controllers
 {
     [Route("api/[controller]")]
     public class UserController : Controller
     {
-        private readonly IUserService _userService;
+        private readonly IUserCollection _userService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserCollection userService)
         {
             _userService = userService;
         }

@@ -1,11 +1,12 @@
-﻿using AuthServer.Repositories.Users;
-using AuthServer.Services.Users;
-using System;
+﻿using System;
+using System.Data.SqlClient;
+using AuthServer.Users.Repository;
+using AuthServer.Users.Users;
 using Xunit;
 
-namespace AuthServer.Tests.Users
+namespace AuthServer.Users.Test.Unit
 {
-    public class UserServiceTests
+    public class UserCollectionTests
     {
 
         [Theory]
@@ -17,22 +18,22 @@ namespace AuthServer.Tests.Users
         [InlineData("@#!@$(@(#)$(#)&&*()!@gmail.com")]
         public void CreateUser_ValidatesEmail(string email)
         {
-            var service = CreateService();
+            var collection = CreateCollection();
            
-            Assert.Throws<ArgumentException>(() => service.CreateUser(email));
+            Assert.Throws<ArgumentException>(() => collection.AddUser(email));
         }
 
         [Theory]
         [InlineData("jim", "johnson", "jim.johnson@gmail.com")]
         public void CreateUser_Succeeds(string first, string last, string email)
         {
-            var service = CreateService();
+            var collection = CreateCollection();
         }
 
 
-        private IUserService CreateService()
+        private IUserCollection CreateCollection()
         {
-            return new UserService(new UserRepository());
+            return new UserCollection();
         }
 
     }

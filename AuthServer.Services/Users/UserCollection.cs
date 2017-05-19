@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace AuthServer.Services.Users
+namespace AuthServer.Users.Users
 {
-    public class UserService : IUserService
+    public class UserCollection : IUserCollection
     {
-        private readonly IUserRepository _userRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UserCollection()
         {
-            _userRepository = userRepository;
         }
 
         public User GetUser(string subjectId)
@@ -23,12 +20,12 @@ namespace AuthServer.Services.Users
             throw new NotImplementedException();
         }
 
-        public void CreateUser(string email)
+        public void AddUser(string email)
         {
             var user = new User(email);
         }
 
-        public void DeleteUser()
+        public void RemoveUser()
         {
             throw new NotImplementedException();
         }
