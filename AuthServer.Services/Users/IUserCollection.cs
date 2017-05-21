@@ -4,12 +4,12 @@ namespace AuthServer.Users.Users
 {
     public interface IUserCollection
     {
-        User GetUser(string subjectId);
+        User GetUser(string userId);
 
         IEnumerable<User> GetUsers();
 
-        void AddUser(string email);
+        void AddUser(string email, string password);
 
-        void RemoveUser();
+        void RemoveUser(string userId);
     }
 }

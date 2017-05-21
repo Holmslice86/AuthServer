@@ -4,16 +4,19 @@ namespace AuthServer.Users.Users
 {
     public class User
     {
-        public User(string email)
+        public User(string email, string password)
         {
-            SubjectId = Guid.NewGuid().ToString();
+            UserId = Guid.NewGuid().ToString();
             ValidateEmail(email);
             Email = email;
+            Password = password;
         }
 
-        public string SubjectId { get; }
+        public string UserId { get; }
 
         public string Email { get; }
+
+        public string Password { get; }
 
         private void ValidateEmail(string email)
         {

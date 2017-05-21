@@ -5,9 +5,9 @@ namespace AuthServer.Users.Users
 {
     public interface IUserRepository
     {
-        User GetUser(string subjectId);
+        User GetUser(string userId);
         IList<User> GetUsers();
         void CreateUser(User user);
-        void DeleteUser(string subjectId);
+        void DeleteUser(string userId);
     }
 }

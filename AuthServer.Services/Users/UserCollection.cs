@@ -10,7 +10,7 @@ namespace AuthServer.Users.Users
         {
         }
 
-        public User GetUser(string subjectId)
+        public User GetUser(string userId)
         {
             throw new NotImplementedException();
         }
@@ -20,12 +20,12 @@ namespace AuthServer.Users.Users
             throw new NotImplementedException();
         }
 
-        public void AddUser(string email)
+        public void AddUser(string email, string password)
         {
-            var user = new User(email);
+            var user = new User(email, password);
         }
 
-        public void RemoveUser()
+        public void RemoveUser(string userId)
         {
             throw new NotImplementedException();
         }

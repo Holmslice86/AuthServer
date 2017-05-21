@@ -17,10 +17,8 @@ namespace AuthServer.Users.Repository
         }
 
 
-        public User GetUser(string subjectId)
+        public User GetUser(string userId)
         {
-
-
             throw new NotImplementedException();
         }
 
@@ -31,7 +29,7 @@ namespace AuthServer.Users.Repository
             const string sql = "";
 
             var results = _connection.Query<UserDataModel>(sql)
-                                     .Select(x => new User(x.Email))
+                                     .Select(x => new User(x.Email, x.Password))
                                      .ToList();
             _connection.Close();
 
@@ -44,12 +42,12 @@ namespace AuthServer.Users.Repository
 
             const string sql = "";
 
-            _connection.Execute(sql, new { user.SubjectId, user.Email });
+            _connection.Execute(sql, new { UserId = user.UserId, user.Email });
 
             _connection.Close();
         }
 
-        public void DeleteUser(string subjectId)
+        public void DeleteUser(string userId)
         {
             throw new NotImplementedException();
         }

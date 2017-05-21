@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Data.SqlClient;
-using AuthServer.Users.Repository;
 using AuthServer.Users.Users;
 using Xunit;
 
@@ -19,8 +17,8 @@ namespace AuthServer.Users.Test.Unit
         public void CreateUser_ValidatesEmail(string email)
         {
             var collection = CreateCollection();
-           
-            Assert.Throws<ArgumentException>(() => collection.AddUser(email));
+            var password = "ABC123!@";
+            Assert.Throws<ArgumentException>(() => collection.AddUser(email, password));
         }
 
         [Theory]

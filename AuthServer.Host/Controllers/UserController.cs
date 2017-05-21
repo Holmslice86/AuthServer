@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using AuthServer.Users.Users;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,43 +7,41 @@ namespace AuthServer.Host.Controllers
     [Route("api/[controller]")]
     public class UserController : Controller
     {
-        private readonly IUserCollection _userService;
+        private readonly IUserCollection _userCollection;
 
-        public UserController(IUserCollection userService)
+        public UserController(IUserCollection userCollection)
         {
-            _userService = userService;
+            _userCollection = userCollection;
         }
 
-        // GET: api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<User> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _userCollection.GetUsers();
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{userId}")]
+        public User Get(string userId)
         {
-            return "value";
+            return _userCollection.GetUser(userId);
         }
 
-        // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post([FromBody]string email, string password)
         {
+            _userCollection.AddUser(email, password);
         }
 
-        // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {
+
         }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{userId}")]
+        public void Delete(string userId)
         {
+            _userCollection.RemoveUser(userId);
         }
     }
 }
