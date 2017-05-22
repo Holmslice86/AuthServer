@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AuthServer.Users.Infrastructure;
 using AuthServer.Users.Users;
 using IdentityModel;
 using IdentityServer4.Models;
@@ -13,58 +12,60 @@ namespace AuthServer.Host.Infrastructure
     public class ResourceOwnerPasswordValidator : IResourceOwnerPasswordValidator
     {
         //repository to get user from db
-        private readonly IUserCollection _userCollection;
+        private readonly IUserRepository _userRepository;
 
-        public ResourceOwnerPasswordValidator(IUserCollection userCollection)
+        public ResourceOwnerPasswordValidator(IUserRepository userRepository)
         {
-            _userCollection = userCollection; //DI
+            _userRepository = userRepository; //DI
         }
 
         //this is used to validate your user account with provided grant at /connect/token
-        public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
+        public Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
         {
             try
             {
-                //get your user model from db (by username - in my case its email)
-                var user = _userCollection.GetUser(context.UserName);
+                var user = _userRepository.GetUserByEmailWithPassword(context.UserName);
                 if (user != null)
                 {
-                    //check if password match - remember to hash password if stored as hash in db
-                    if (user.Password == context.Password)
+                    if (Cryptography.ConfirmPassword(context.Password, user.Password, user.Salt))
                     {
-                        //set the result
                         context.Result = new GrantValidationResult(
-                            subject: user.UserId,
-                            authenticationMethod: "custom",
-                            claims: GetUserClaims(user));
+                            user.UserId,
+                            "custom",
+                            GetUserClaims(user));
 
-                        return;
+                        return Task.FromResult(0);
                     }
 
                     context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, "Incorrect password");
-                    return;
+                    return Task.FromResult(0);
+
                 }
                 context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, "User does not exist.");
-                return;
+                return Task.FromResult(0);
+
             }
             catch (Exception ex)
             {
                 context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant,
                     "Invalid username or password");
             }
+
+            return Task.FromResult(0);
         }
 
         //build claims array from user data
         public static Claim[] GetUserClaims(User user)
         {
-            return new Claim[]
+            return new[]
             {
-                new Claim("user_id", user.UserId.ToString() ?? ""),
-                new Claim(JwtClaimTypes.Email, user.Email ?? ""),
+                new Claim("user_id", user.UserId ?? ""),
+                new Claim(JwtClaimTypes.Name,user.Email ?? ""),
+                new Claim(JwtClaimTypes.Email, user.Email ?? "")
                 //new Claim("some_claim_you_want_to_see", user.Some_Data_From_User ?? ""),
 
                 //roles
-                //new Claim(JwtClaimTypes.Role, user.Role)
+               // new Claim(JwtClaimTypes.Role, user.Role)
             };
         }
     }

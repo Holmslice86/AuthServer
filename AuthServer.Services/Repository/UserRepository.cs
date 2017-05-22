@@ -22,6 +22,11 @@ namespace AuthServer.Users.Repository
             throw new NotImplementedException();
         }
 
+        public User GetUserByEmailWithPassword(string email)
+        {
+            throw new NotImplementedException();
+        }
+
         public IList<User> GetUsers()
         {
             _connection.Open();
@@ -29,20 +34,20 @@ namespace AuthServer.Users.Repository
             const string sql = "";
 
             var results = _connection.Query<UserDataModel>(sql)
-                                     .Select(x => new User(x.Email, x.Password))
+                                     .Select(x => User.CreateUser(x.Email, x.Password))
                                      .ToList();
             _connection.Close();
 
             return results;
         }
 
-        public void CreateUser(User user)
+        public void CreateUser(string email, string password)
         {
             _connection.Open();
 
             const string sql = "";
 
-            _connection.Execute(sql, new { UserId = user.UserId, user.Email });
+            //  _connection.Execute(sql, new { UserId = user.UserId, user.Email });
 
             _connection.Close();
         }

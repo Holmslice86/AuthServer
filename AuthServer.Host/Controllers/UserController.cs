@@ -7,29 +7,29 @@ namespace AuthServer.Host.Controllers
     [Route("api/[controller]")]
     public class UserController : Controller
     {
-        private readonly IUserCollection _userCollection;
+        private readonly IUserRepository _userRepository;
 
-        public UserController(IUserCollection userCollection)
+        public UserController(IUserRepository userRepository)
         {
-            _userCollection = userCollection;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
         public IEnumerable<User> Get()
         {
-            return _userCollection.GetUsers();
+            return _userRepository.GetUsers();
         }
 
         [HttpGet("{userId}")]
         public User Get(string userId)
         {
-            return _userCollection.GetUser(userId);
+            return _userRepository.GetUser(userId);
         }
 
         [HttpPost]
         public void Post([FromBody]string email, string password)
         {
-            _userCollection.AddUser(email, password);
+            _userRepository.CreateUser(email, password);
         }
 
         [HttpPut("{id}")]
@@ -41,7 +41,7 @@ namespace AuthServer.Host.Controllers
         [HttpDelete("{userId}")]
         public void Delete(string userId)
         {
-            _userCollection.RemoveUser(userId);
+            _userRepository.DeleteUser(userId);
         }
     }
 }

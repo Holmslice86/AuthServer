@@ -4,9 +4,8 @@ using Xunit;
 
 namespace AuthServer.Users.Test.Unit
 {
-    public class UserCollectionTests
+    public class UserTests
     {
-
         [Theory]
         [InlineData("")]
         [InlineData(" ")]
@@ -16,22 +15,17 @@ namespace AuthServer.Users.Test.Unit
         [InlineData("@#!@$(@(#)$(#)&&*()!@gmail.com")]
         public void CreateUser_ValidatesEmail(string email)
         {
-            var collection = CreateCollection();
             var password = "ABC123!@";
-            Assert.Throws<ArgumentException>(() => collection.AddUser(email, password));
+            Assert.Throws<ArgumentException>(() => User.CreateUser(email, password));
         }
 
         [Theory]
         [InlineData("jim", "johnson", "jim.johnson@gmail.com")]
         public void CreateUser_Succeeds(string first, string last, string email)
         {
-            var collection = CreateCollection();
-        }
-
-
-        private IUserCollection CreateCollection()
-        {
-            return new UserCollection();
+            var password = "ABC123!@";
+            var user = User.CreateUser(email, password);
+            Assert.True(user != null);
         }
 
     }

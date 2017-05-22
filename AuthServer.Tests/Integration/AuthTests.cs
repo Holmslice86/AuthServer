@@ -34,7 +34,7 @@ namespace AuthServer.Tests.Integration
 
                 var disco2 = await DiscoveryClient.GetAsync(client.BaseAddress.ToString());
                 var tokenClient2 = new TokenClient(disco.TokenEndpoint, "client", "secret");
-                var tokenResponse2 = await tokenClient.RequestResourceOwnerPasswordAsync("alice", "password", "api1");
+                var tokenResponse2 = await tokenClient.RequestResourceOwnerPasswordAsync("alice@gmail.com", "password", "api1");
                 Assert.Equal(false, tokenResponse2.IsError);
             }
         }
@@ -71,7 +71,7 @@ namespace AuthServer.Tests.Integration
                 var dictionary = new Dictionary<string, string>();
                 dictionary["client_id"] = "ro.client";
                 dictionary["client_secret"] = "secret";
-                dictionary["username"] = "alice";
+                dictionary["username"] = "alice@gmail.com";
                 dictionary["password"] = "password";
                 dictionary["grant_type"] = "password";
                 dictionary["scope"] = "api1";

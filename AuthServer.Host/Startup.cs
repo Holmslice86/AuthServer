@@ -27,17 +27,17 @@ namespace AuthServer.Host
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IUserRepository, UserInMemoryRepository>();
-            services.AddTransient<IUserCollection, UserCollection>();
-            services.AddTransient<IProfileService, ProfileService>();
-            services.AddTransient<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
+            services.AddScoped<IUserRepository, UserInMemoryRepository>();
 
             // configure identity server with in-memory stores, keys, clients and scopes
             services.AddIdentityServer()
                 .AddTemporarySigningCredential()
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients())
-                .AddResourceOwnerValidator<IResourceOwnerPasswordValidator>();
+                .AddProfileService<ProfileService>();
+
+            services.AddTransient<IProfileService, ProfileService>();
+            services.AddTransient<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
 
             services.AddMvc();
         }
